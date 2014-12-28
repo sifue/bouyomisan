@@ -17,7 +17,6 @@ public class Main extends Application {
         primaryStage.setTitle("棒読さん");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {
