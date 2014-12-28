@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'macAppBundle'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
+    }
+}
+
+macAppBundle {
+    mainClassName = "org.soichiro.bouyomisan.Main"
+}
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+mainClassName = "org.soichiro.bouyomisan.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.0.3'
+    compile 'io.netty:netty-all:4.0.24.Final'
+    testCompile 'junit:junit:4.12'
+}

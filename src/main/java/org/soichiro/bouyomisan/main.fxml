@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
+   <children>
+      <BorderPane prefHeight="241.0" prefWidth="485.0">
+         <bottom>
+            <Button mnemonicParsing="false" onAction="#handleSayExecuteAction" text="読み上げ" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="5.0" />
+               </BorderPane.margin>
+            </Button>
+         </bottom>
+         <center>
+            <TextArea fx:id="sayText" prefHeight="215.0" prefWidth="485.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </TextArea>
+         </center>
+         <top>
+            <BorderPane prefHeight="0.0" prefWidth="485.0" BorderPane.alignment="CENTER">
+               <left>
+                  <Button mnemonicParsing="false" onAction="#handleSayCommandSelectButtonAction" text="読み上げコマンド選択" BorderPane.alignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <BorderPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </left>
+               <center>
+                  <TextField fx:id="sayCommandPath" focusTraversable="false" onKeyTyped="#handleCommandPathTextChanged" prefHeight="26.0" prefWidth="321.0" promptText="読み上げコマンドのパス" BorderPane.alignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <BorderPane.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </TextField>
+               </center>
+            </BorderPane>
+         </top>
+      </BorderPane>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</FlowPane>
