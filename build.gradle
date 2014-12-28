@@ -28,5 +28,6 @@ repositories {
 dependencies {
     compile 'io.reactivex:rxjava:1.0.3'
     compile 'io.netty:netty-all:4.0.24.Final'
+    compile 'org.apache.lucene:lucene-analyzers-kuromoji:4.10.2'
     testCompile 'junit:junit:4.12'
 }
