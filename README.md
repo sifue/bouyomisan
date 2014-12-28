@@ -3,5 +3,5 @@ Macで無料で利用できる音声合成コマンドを、TCP通信を利用�
 Windowsの棒読みちゃんをリスペクトしており、通信のプロトコルも棒読みちゃんを出来る限り模倣しています。  
 
 # ライセンス
-(The MIT License)[http://opensource.org/licenses/MIT]  
+[The MIT License](http://opensource.org/licenses/MIT)  
 
