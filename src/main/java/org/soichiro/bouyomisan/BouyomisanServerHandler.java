@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 import java.nio.charset.Charset;
 
@@ -18,12 +20,23 @@ public class BouyomisanServerHandler extends ChannelInboundHandlerAdapter {
 
     final public SayCommandExecutor sayCommandExecutor;
 
+    final private PublishSubject<String> readingTextSubject;
+
     /**
      * コンストラクタ
      * @param sayCommandExecutor
      */
     public BouyomisanServerHandler(SayCommandExecutor sayCommandExecutor) {
         this.sayCommandExecutor = sayCommandExecutor;
+        this.readingTextSubject = PublishSubject.create();
+    }
+
+    /**
+     * 読み上げられたテキストのObservableを取得する
+     * @return
+     */
+    public Observable<String> getSayOptionObservable() {
+        return this.readingTextSubject.asObservable();
     }
 
     @Override
@@ -73,7 +86,8 @@ public class BouyomisanServerHandler extends ChannelInboundHandlerAdapter {
                 stringSpeed
         );
 
-        sayCommandExecutor.execute(option);
+        String readingText = sayCommandExecutor.execute(option);
+        readingTextSubject.onNext(readingText);
     }
 
     @Override

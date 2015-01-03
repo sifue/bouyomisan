@@ -30,6 +30,9 @@ public class BouyomisanServer {
 
     private final BouyomisanServerHandler bouyomisanServerHandler;
 
+    private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+    private final EventLoopGroup workerGroup = new NioEventLoopGroup();
+
     /**
      * コンストラクタ
      * @param bouyomisanServerHandler
@@ -56,6 +59,15 @@ public class BouyomisanServer {
     }
 
     /**
+     * サーバーをシャットダウンする
+     */
+    public void shutdown() {
+        workerGroup.shutdownGracefully();
+        bossGroup.shutdownGracefully();
+        es.shutdown();
+    }
+
+    /**
      * サーバーの開始
      */
     public void runServer() throws Exception {
@@ -69,8 +81,6 @@ public class BouyomisanServer {
         }
 
         // Configure the server.
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)

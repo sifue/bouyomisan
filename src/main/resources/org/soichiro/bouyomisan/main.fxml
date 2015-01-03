@@ -5,19 +5,30 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="391.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
    <center>
-      <TextArea fx:id="sayText" prefHeight="200.0" prefWidth="200.0" promptText="読み上げさせたい文字列を入力して下さい" BorderPane.alignment="CENTER">
+      <TextArea fx:id="sayText" prefHeight="169.0" prefWidth="345.0" promptText="読み上げさせたい文字列を入力して下さい" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
       </TextArea>
    </center>
    <bottom>
-      <Button fx:id="sayCommandExecutor" mnemonicParsing="false" onAction="#handleSayExecuteAction" text="読み上げ" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="5.0" top="5.0" />
-         </BorderPane.margin>
-      </Button>
+      <BorderPane prefHeight="156.0" prefWidth="355.0" BorderPane.alignment="CENTER">
+         <center>
+            <TextArea fx:id="readingText" editable="false" prefHeight="167.0" prefWidth="345.0" promptText="読み上げられたテキストが表示されます" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </TextArea>
+         </center>
+         <bottom>
+            <Button fx:id="sayCommandExecutor" mnemonicParsing="false" onAction="#handleSayExecuteAction" text="読み上げ" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </BorderPane.margin>
+            </Button>
+         </bottom>
+      </BorderPane>
    </bottom>
 </BorderPane>

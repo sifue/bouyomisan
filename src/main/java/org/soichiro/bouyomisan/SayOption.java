@@ -39,4 +39,14 @@ public class SayOption {
         this.sayVoice = sayVoice;
         this.saySpeed = saySpeed;
     }
+
+    @Override
+    public String toString() {
+        return "SayOption{" +
+                "sayText='" + sayText + '\'' +
+                ", sayVolume='" + sayVolume + '\'' +
+                ", sayVoice='" + sayVoice + '\'' +
+                ", saySpeed='" + saySpeed + '\'' +
+                '}';
+    }
 }

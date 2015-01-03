@@ -21,15 +21,16 @@ public class SayCommandExecutor {
 
     /**
      * 読み上げの実行
+     * 読み上げられたカナのテキストを返すが、
+     * 読みあげられなかった時には空文字を返す
      *
      * @param option
+     * @return 読み上げられたカナのテキスト
      */
-    synchronized public void execute(SayOption option) {
-        if(option.sayText == null || option.sayText.isEmpty()) return;
+    synchronized public String execute(SayOption option) {
+        if(option.sayText == null || option.sayText.isEmpty()) return "";
 
         String readingText = getKanaReading(option.sayText);
-        System.out.println("readingText: " + readingText);
-
         Config conf = Config.getSingleton();
         if(!new File(conf.sayCommand).isFile()) {
             throw new IllegalStateException(
@@ -56,6 +57,8 @@ public class SayCommandExecutor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return readingText;
     }
 
     /**
