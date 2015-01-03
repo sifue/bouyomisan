@@ -87,7 +87,7 @@ public class SayCommandExecutor {
                 }
             }
         }
-        return replacedWord;
+        return replacedWord.trim(); // 余計なものが入ることがあるので最後にトリムする
     }
 
     /**
