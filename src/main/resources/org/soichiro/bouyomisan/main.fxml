@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
    <center>
-      <TextArea fx:id="sayText" prefHeight="169.0" prefWidth="345.0" promptText="読み上げさせたい文字列を入力して下さい" BorderPane.alignment="CENTER">
+      <TextArea fx:id="sayText" prefHeight="33.0" prefWidth="345.0" promptText="読み上げさせたい文字列を入力して下さい" wrapText="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
       </TextArea>
    </center>
    <bottom>
-      <BorderPane prefHeight="156.0" prefWidth="355.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="124.0" prefWidth="355.0" BorderPane.alignment="CENTER">
          <center>
-            <TextArea fx:id="readingText" editable="false" prefHeight="167.0" prefWidth="345.0" promptText="読み上げられたテキストが表示されます" BorderPane.alignment="CENTER">
+            <TextArea fx:id="readingText" editable="false" focusTraversable="false" prefHeight="81.0" prefWidth="345.0" promptText="読み上げられたテキストが表示されます" wrapText="true" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </BorderPane.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
             </TextArea>
          </center>
          <bottom>
