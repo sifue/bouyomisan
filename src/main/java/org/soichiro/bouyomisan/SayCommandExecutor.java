@@ -12,18 +12,10 @@ import java.util.List;
  */
 public class SayCommandExecutor {
 
-    private volatile String commandPath;
-
     /**
      * コンストラクタ
-     * @param commandPath
      */
-    public SayCommandExecutor(String commandPath) {
-        try {
-            setCommandPath(commandPath);
-        } catch (IOException e) {
-            new IllegalArgumentException(e);
-        }
+    public SayCommandExecutor() {
     }
 
     /**
@@ -36,8 +28,18 @@ public class SayCommandExecutor {
         String readingText = getKanaReading(text);
         System.out.println("readingText: " + readingText);
 
+        Config conf = Config.getSingleton();
+        if(!new File(conf.sayCommand).isFile()) {
+            throw new IllegalStateException(
+                    String.format("読み上げコマンド %s が存在しません.", conf.sayCommand));
+        }
+
         ProcessBuilder pb = new ProcessBuilder();
-        pb.command(commandPath, readingText);
+        pb.command(conf.sayCommand,
+                "-p", conf.sayVoice,
+                "-s", conf.saySpeed,
+                "-b", conf.sayVolume,
+                readingText);
         try {
             pb.start();
         } catch (IOException e) {
@@ -63,18 +65,5 @@ public class SayCommandExecutor {
             }
         }
         return kanas.toString();
-    }
-
-    /**
-     * commandPathを設定
-     * @param commandPath
-     */
-    private void setCommandPath(String commandPath) throws IOException {
-        if(new File(commandPath).isFile()) {
-            this.commandPath = commandPath;
-        } else {
-            throw new IOException(
-                    String.format("読み上げコマンド %s が存在しません.", commandPath));
-        }
     }
 }

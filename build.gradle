@@ -29,6 +29,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.typesafe:config:1.2.1'
     compile 'io.reactivex:rxjava:1.0.3'
     compile 'io.netty:netty-all:4.0.24.Final'
     compile 'org.atilika.kuromoji:kuromoji:0.7.7'
