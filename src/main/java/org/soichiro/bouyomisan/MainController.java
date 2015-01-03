@@ -19,6 +19,14 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sayCommandExecutor = new SayCommandExecutor();
+        String sayCommand = Config.getSingleton().sayCommand;
+        if(!new File(sayCommand).isFile()) {
+            sayText.setPromptText(
+                    String.format("読み上げコマンド\"%s\"が見つかりませんでした。" +
+                            "SayKotoeri2などをインストールして再起動してください。",
+                            sayCommand)
+            );
+        }
     }
 
     @FXML
