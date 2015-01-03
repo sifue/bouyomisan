@@ -14,11 +14,10 @@ public class MainController implements Initializable {
     @FXML
     private TextArea sayText;
 
-    private SayCommandExecutor sayCommandExecutor;
+    public final SayCommandExecutor sayCommandExecutor = new SayCommandExecutor();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sayCommandExecutor = new SayCommandExecutor();
         String sayCommand = Config.getSingleton().sayCommand;
         if(!new File(sayCommand).isFile()) {
             sayText.setPromptText(
@@ -31,7 +30,9 @@ public class MainController implements Initializable {
 
     @FXML
     protected void handleSayExecuteAction(ActionEvent event) {
-        sayCommandExecutor.execute(getSayText());
+        sayCommandExecutor.execute(
+                getSayText(),
+                new SayOption(null, null, null));
     }
 
     private String getSayText() {

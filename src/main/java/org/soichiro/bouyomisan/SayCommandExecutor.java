@@ -5,6 +5,7 @@ import org.atilika.kuromoji.Tokenizer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +21,11 @@ public class SayCommandExecutor {
 
     /**
      * 読み上げの実行
+     *
      * @param text
+     * @param option
      */
-    synchronized public void execute(String text) {
+    synchronized public void execute(String text, SayOption option) {
         if(text == null || text.isEmpty()) return;
 
         String readingText = getKanaReading(text);
@@ -34,12 +37,21 @@ public class SayCommandExecutor {
                     String.format("読み上げコマンド %s が存在しません.", conf.sayCommand));
         }
 
+        List<String> commandList = new ArrayList<String>();
+        commandList.add(conf.sayCommand);
+        commandList.add("-p");
+        commandList.add(option.sayVoice == null
+                ? conf.sayVoice : option.sayVoice);
+        commandList.add("-s");
+        commandList.add(option.saySpeed == null
+                ? conf.saySpeed : option.saySpeed);
+        commandList.add("-b");
+        commandList.add(option.sayVolume == null
+                ? conf.sayVolume : option.sayVolume);
+        commandList.add(readingText);
         ProcessBuilder pb = new ProcessBuilder();
-        pb.command(conf.sayCommand,
-                "-p", conf.sayVoice,
-                "-s", conf.saySpeed,
-                "-b", conf.sayVolume,
-                readingText);
+        pb.command(commandList);
+
         try {
             pb.start();
         } catch (IOException e) {

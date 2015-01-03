@@ -16,6 +16,7 @@ import javax.net.ssl.SSLException;
 
 /**
  * 純正の棒読みちゃんのクライアント
+ * 動作テスト用
  */
 public class BouyomisanClient {
 
@@ -25,6 +26,12 @@ public class BouyomisanClient {
     static final int PORT = Integer.parseInt(System.getProperty("port", "50001"));
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
+    /**
+     * テスト用のメインメソッド
+     * @param args
+     * @throws SSLException
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws SSLException, InterruptedException{
 
         // Configure SSL.git

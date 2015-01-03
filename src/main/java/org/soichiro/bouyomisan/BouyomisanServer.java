@@ -15,13 +15,50 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+/**
+ * 棒読みちゃんの読み上げサーバーを模したサーバー
+ */
 public class BouyomisanServer {
 
-    static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", "50001"));
+    private final boolean SSL = System.getProperty("ssl") != null;
+    private final int PORT = Integer.parseInt(
+            System.getProperty("port", Config.getSingleton().serverPort));
+    private final ExecutorService es = Executors.newSingleThreadExecutor();
 
-    public static void main(String[] args) throws Exception {
+    private final BouyomisanServerHandler bouyomisanServerHandler;
+
+    /**
+     * コンストラクタ
+     * @param bouyomisanServerHandler
+     */
+    public BouyomisanServer(BouyomisanServerHandler bouyomisanServerHandler) {
+        this.bouyomisanServerHandler = bouyomisanServerHandler;
+    }
+
+    /**
+     * サーバーの開始を非同期に行う
+     * @throws Exception
+     */
+    public void start() throws Exception {
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    BouyomisanServer.this.runServer();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * サーバーの開始
+     */
+    public void runServer() throws Exception {
         // Configure SSL.
         final SslContext sslCtx;
         if (SSL) {
@@ -48,7 +85,7 @@ public class BouyomisanServer {
                                 p.addLast(sslCtx.newHandler(ch.alloc()));
                             }
                             //p.addLast(new LoggingHandler(LogLevel.INFO));
-                            p.addLast(new BouyomisanServerHandler());
+                            p.addLast(bouyomisanServerHandler);
                         }
                     });
 
@@ -64,4 +101,17 @@ public class BouyomisanServer {
         }
     }
 
+    /**
+     * テスト用のメインメソッド
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+        BouyomisanServer bouyomisanServer =
+                new BouyomisanServer(
+                        new BouyomisanServerHandler(
+                                new SayCommandExecutor()
+                        ));
+        bouyomisanServer.start();
+    }
 }

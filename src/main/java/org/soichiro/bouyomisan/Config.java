@@ -35,6 +35,11 @@ public class Config {
     public final String saySpeed;
 
     /**
+     * 読み上げスピード
+     */
+    public final String serverPort;
+
+    /**
      * コンストラクタ
      */
     private Config() {
@@ -45,6 +50,7 @@ public class Config {
         this.sayVoice = conf.getString("bouyomisan.say.voice");
         this.sayVolume = conf.getString("bouyomisan.say.volume");
         this.saySpeed = conf.getString("bouyomisan.say.speed");
+        this.serverPort = conf.getString("bouyomisan.server.port");
     }
 
     /**

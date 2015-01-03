@@ -13,10 +13,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+        Parent root = fxmlLoader.load();
+        MainController mainController = fxmlLoader.getController();
         primaryStage.setTitle("棒読さん");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        BouyomisanServerHandler bouyomisanServerHandler =
+                new BouyomisanServerHandler(mainController.sayCommandExecutor);
+        BouyomisanServer bouyomisanServer = new BouyomisanServer(bouyomisanServerHandler);
+        bouyomisanServer.start();
     }
 
     public static void main(String[] args) {

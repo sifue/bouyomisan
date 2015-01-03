@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 
 /**
  * 棒読みちゃんクライアントのハンドラ
+ * (テスト用)
  */
 public class BouyomisanClientHandler extends ChannelInboundHandlerAdapter {
 
