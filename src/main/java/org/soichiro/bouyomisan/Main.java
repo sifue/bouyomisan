@@ -19,7 +19,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
         final Parent root = fxmlLoader.load();
         final MainController mainController = fxmlLoader.getController();
-        primaryStage.setTitle("棒読さん");
+        primaryStage.setTitle("棒読みさん");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
