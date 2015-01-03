@@ -33,6 +33,24 @@ public class SayCommandExecutor {
     synchronized public void execute(String text) {
         if(text == null || text.isEmpty()) return;
 
+        String readingText = getKanaReading(text);
+        System.out.println("readingText: " + readingText);
+
+        ProcessBuilder pb = new ProcessBuilder();
+        pb.command(commandPath, readingText);
+        try {
+            pb.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 漢字かな変換をしたよみを取得する
+     * @param text
+     * @return
+     */
+    private String getKanaReading(String text) {
         Tokenizer tokenizer = Tokenizer.builder().build();
         List<Token> tokens = tokenizer.tokenize(text);
         StringBuffer kanas = new StringBuffer();
@@ -44,17 +62,7 @@ public class SayCommandExecutor {
                 kanas.append(reading);
             }
         }
-
-        String readingText =  kanas.toString();
-        System.out.println("readingText: " + readingText);
-
-        ProcessBuilder pb = new ProcessBuilder();
-        pb.command(commandPath, readingText);
-        try {
-            pb.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return kanas.toString();
     }
 
     /**
