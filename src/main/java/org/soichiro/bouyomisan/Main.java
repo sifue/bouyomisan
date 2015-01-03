@@ -33,7 +33,7 @@ public class Main extends Application {
             @Override
             public void handle(WindowEvent event) {
                 bouyomisanServer.shutdown();
-                System.exit(0);
+                System.exit(0); // 1秒後強制終了
             }
         });
 

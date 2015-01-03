@@ -58,9 +58,7 @@ public class Config {
      */
     private Config() {
         com.typesafe.config.Config conf =
-                ConfigFactory.parseFile(new File(
-                        System.getProperty("bouyomisan.conf.path",
-                                getClass().getResource("bouyomisan.conf").getPath())));
+                ConfigFactory.parseURL(getClass().getResource("bouyomisan.conf"));
         this.sayCommand = conf.getString("bouyomisan.say.command");
         this.sayVoice = conf.getString("bouyomisan.say.voice");
         this.sayVolume = conf.getString("bouyomisan.say.volume");
