@@ -4,42 +4,39 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
-import java.io.IOException;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+
 public class MainController implements Initializable {
-    @FXML
-    private TextField sayCommandPath;
 
     @FXML
     private TextArea sayText;
 
     private SayCommandExecutor sayCommandExecutor;
 
+    private static final String SAY_KOTOERI_2_COMMAND = "/usr/local/bin/SayKotoeri2";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sayCommandPath.setText("/usr/bin/say");
-        sayCommandExecutor = new SayCommandExecutor(sayCommandPath.getText());
-    }
 
-    @FXML
-    protected void handleSayCommandSelectButtonAction(ActionEvent event) {
-        sayCommandExecutor.execute(sayText.getText());
+        if(!new File(SAY_KOTOERI_2_COMMAND).isFile()) {
+
+        }
+
+        sayCommandExecutor = new SayCommandExecutor(SAY_KOTOERI_2_COMMAND);
     }
 
     @FXML
     protected void handleSayExecuteAction(ActionEvent event) {
-        sayCommandExecutor.execute(sayText.getText());
+        sayCommandExecutor.execute(getSayText());
     }
 
-    @FXML
-    protected void handleCommandPathTextChanged(KeyEvent event) {
-        try {
-            sayCommandExecutor.setCommandPath(sayCommandPath.getText());
-        } catch (IOException ignore) {}
+    private String getSayText() {
+        String oneLine = sayText.getText().replaceAll("\n", " ").replaceAll("\r", " ");
+        return oneLine;
     }
 }

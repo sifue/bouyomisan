@@ -42,7 +42,7 @@ public class BouyomisanClientHandler extends ChannelInboundHandlerAdapter {
         byte code = 0;
         byteBuf.writeByte(code);
 
-        String msg = "やったー";
+        String msg = "おはようございます";
         byte[] msgBytes = msg.getBytes(Charset.forName("UTF-8"));
         byteBuf.writeInt(Integer.reverseBytes(msgBytes.length));
         byteBuf.writeBytes(msgBytes);
@@ -54,7 +54,7 @@ public class BouyomisanClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ctx.write(msg);
-        System.out.println(firstMessage);
+        System.out.println(msg);
     }
 
     @Override
