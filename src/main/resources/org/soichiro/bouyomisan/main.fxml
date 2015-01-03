@@ -8,7 +8,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.soichiro.bouyomisan.MainController">
    <center>
-      <TextArea fx:id="sayText" prefHeight="33.0" prefWidth="345.0" promptText="読み上げさせたい文字列を入力して下さい" wrapText="true" BorderPane.alignment="CENTER">
+      <TextArea fx:id="sayText" onKeyReleased="#handleSayTextKeyReleased" prefHeight="33.0" prefWidth="345.0" promptText="読み上げさせたいテキストを入力して下さい" wrapText="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
@@ -30,7 +30,7 @@
             </TextArea>
          </center>
          <bottom>
-            <Button fx:id="sayCommandExecutor" mnemonicParsing="false" onAction="#handleSayExecuteAction" text="読み上げ" BorderPane.alignment="CENTER">
+            <Button fx:id="sayCommandExecutor" mnemonicParsing="false" onAction="#handleSayExecuteAction" text="読み上げ (⌘+return)" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </BorderPane.margin>

@@ -1,12 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'idea'
-
+apply plugin: 'macAppBundle'
 
 buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
+    }
+}
+
+macAppBundle {
+    mainClassName = "org.soichiro.bouyomisan.Main"
+    icon = "Dapino-Beauty-Lips.icns" // DaPino with Creative Commons http://www.iconarchive.com/show/beauty-icons-by-dapino/lips-icon.html
+    bundleJRE = false
+    backgroundImage = "lips-icon.png" // DaPino with Creative Commons http://www.iconarchive.com/show/beauty-icons-by-dapino/lips-icon.html
 }
 
 sourceCompatibility = 1.8

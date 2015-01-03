@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.net.URL;
@@ -28,9 +30,9 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         String sayCommand = Config.getSingleton().sayCommand;
         if(!new File(sayCommand).isFile()) {
-            sayText.setPromptText(
+            readingText.setPromptText(
                     String.format("読み上げコマンド\"%s\"が見つかりませんでした。" +
-                            "SayKotoeri2などをインストールして再起動してください。",
+                                    "SayKotoeri2などをインストールして再起動してください。",
                             sayCommand)
             );
         }
@@ -41,6 +43,16 @@ public class MainController implements Initializable {
         String readingText = sayCommandExecutor.execute(
                 new SayOption(getSayText(), null, null, null));
         setReadingTextValue(readingText);
+    }
+
+    @FXML
+    protected void handleSayTextKeyReleased(KeyEvent event) {
+        // ⌘ + Enterで読み上げ
+        if(event.isMetaDown() && event.getCode().equals(KeyCode.ENTER)) {
+            String readingText = sayCommandExecutor.execute(
+                    new SayOption(getSayText(), null, null, null));
+            setReadingTextValue(readingText);
+        }
     }
 
     private String getSayText() {
