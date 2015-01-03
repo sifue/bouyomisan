@@ -29,6 +29,7 @@ public class BouyomisanClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
 
+        // 純正の棒読みちゃんに準拠のデータを送信
         ByteBuf byteBuf = ctx.alloc().buffer(4);
         short command = 0x001;
         byteBuf.writeShort(Short.reverseBytes(command));
@@ -55,7 +56,7 @@ public class BouyomisanClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ctx.write(msg);
-        System.out.println(msg);
+        System.out.println("BouyomisanClientHandler#channelRead: " + msg);
     }
 
     @Override

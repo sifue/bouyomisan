@@ -1,8 +1,5 @@
 package org.soichiro.bouyomisan;
 
-/**
- * Created by soichiro on 2014/12/28.
- */
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
