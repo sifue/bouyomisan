@@ -126,4 +126,19 @@ public class Config {
         return singleton;
     }
 
+    /**
+     * 置換単語のリストを取得
+     * @return
+     */
+    public List<BouyomichanReplaceWord> getListReplaceWords() {
+        return new ArrayList<BouyomichanReplaceWord>(listReplaceWords);
+    }
+
+    /**
+     * 置換正規表現のリストを取得
+     * @return
+     */
+    public List<BouyomichanReplaceRegex> getListReplaceRegexes() {
+        return new ArrayList<BouyomichanReplaceRegex>(listReplaceRegexes);
+    }
 }

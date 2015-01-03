@@ -1,14 +1,14 @@
 package org.soichiro.bouyomisan;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.atilika.kuromoji.Token;
 import org.atilika.kuromoji.Tokenizer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * SayCommandを実行するサービス
@@ -19,10 +19,6 @@ public class SayCommandExecutor {
      * コンストラクタ
      */
     public SayCommandExecutor() {
-
-
-
-
     }
 
     /**
@@ -36,7 +32,8 @@ public class SayCommandExecutor {
     synchronized public String execute(SayOption option) {
         if(option.sayText == null || option.sayText.isEmpty()) return "";
 
-        String readingText = getKanaReading(option.sayText);
+        String replacedText = getReplacedText(option.sayText);
+        String readingText = getKanaReading(replacedText);
         Config conf = Config.getSingleton();
         if(!new File(conf.sayCommand).isFile()) {
             throw new IllegalStateException(
@@ -65,6 +62,32 @@ public class SayCommandExecutor {
         }
 
         return readingText;
+    }
+
+    /**
+     * 置換設定を利用して読み上げテキストを置換したものを取得する
+     * @param text
+     * @return
+     */
+    private String getReplacedText(String text) {
+        String replacedWord = text;
+        List<BouyomichanReplaceWord> listReplaceWords = Config.getSingleton().getListReplaceWords();
+        for (BouyomichanReplaceWord w :listReplaceWords) {
+            replacedWord = replacedWord.replaceAll(w.from, w.to);
+        }
+
+        List<BouyomichanReplaceRegex> listReplaceRegexes = Config.getSingleton().getListReplaceRegexes();
+        for (BouyomichanReplaceRegex r: listReplaceRegexes) {
+            Pattern p = Pattern.compile(r.from, Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(replacedWord);
+            if(m.find()){
+                int count = m.groupCount();
+                for (int i = 1; i <= count ; i++) {
+                    replacedWord = r.to.replaceAll("\\$" + Integer.valueOf(i), m.group(i));
+                }
+            }
+        }
+        return replacedWord;
     }
 
     /**
