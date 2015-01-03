@@ -1,6 +1,6 @@
 # 棒読みさんって何？
 ![棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/lips-icon.png)  
-Windowsにある[棒読みさん](http://chi.usamimi.info/Program/Application/BouyomiChan/)の機能の一部をMac用に移植したアプリです。
+Windowsにあるテキスト読み上げアプリ[棒読みさん](http://chi.usamimi.info/Program/Application/BouyomiChan/)の機能の一部をMac用に移植したアプリです。
 
 # 棒読みちゃんから移植した機能
 ![棒読みさんスクリーンショット](https://raw.githubusercontent.com/sifue/bouyomisan/master/doc/img/screenshot.png)
