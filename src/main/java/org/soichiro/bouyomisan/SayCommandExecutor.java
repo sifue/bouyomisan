@@ -1,11 +1,13 @@
 package org.soichiro.bouyomisan;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.atilika.kuromoji.Token;
 import org.atilika.kuromoji.Tokenizer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,6 +19,10 @@ public class SayCommandExecutor {
      * コンストラクタ
      */
     public SayCommandExecutor() {
+
+
+
+
     }
 
     /**
