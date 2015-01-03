@@ -67,12 +67,13 @@ public class BouyomisanServerHandler extends ChannelInboundHandlerAdapter {
         String stringSpeed = speed < 0 ? null : Short.valueOf(speed).toString();
 
         SayOption option = new SayOption(
+                text,
                 stringVolume,
                 stringVoice,
                 stringSpeed
         );
 
-        sayCommandExecutor.execute(text, option);
+        sayCommandExecutor.execute(option);
     }
 
     @Override

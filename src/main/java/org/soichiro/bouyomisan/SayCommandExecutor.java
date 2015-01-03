@@ -22,13 +22,12 @@ public class SayCommandExecutor {
     /**
      * 読み上げの実行
      *
-     * @param text
      * @param option
      */
-    synchronized public void execute(String text, SayOption option) {
-        if(text == null || text.isEmpty()) return;
+    synchronized public void execute(SayOption option) {
+        if(option.sayText == null || option.sayText.isEmpty()) return;
 
-        String readingText = getKanaReading(text);
+        String readingText = getKanaReading(option.sayText);
         System.out.println("readingText: " + readingText);
 
         Config conf = Config.getSingleton();

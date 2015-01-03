@@ -7,6 +7,11 @@ package org.soichiro.bouyomisan;
 public class SayOption {
 
     /**
+     * 読み上げテキスト
+     */
+    public final String sayText;
+
+    /**
      * 読み上げボリューム
      */
     public final String sayVolume;
@@ -23,11 +28,13 @@ public class SayOption {
 
     /**
      * コンストラクタ
+     * @param sayText
      * @param sayVolume
      * @param sayVoice
      * @param saySpeed
      */
-    public SayOption(String sayVolume, String sayVoice, String saySpeed) {
+    public SayOption(String sayText, String sayVolume, String sayVoice, String saySpeed) {
+        this.sayText = sayText;
         this.sayVolume = sayVolume;
         this.sayVoice = sayVoice;
         this.saySpeed = saySpeed;

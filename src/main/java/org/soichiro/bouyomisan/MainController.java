@@ -31,8 +31,7 @@ public class MainController implements Initializable {
     @FXML
     protected void handleSayExecuteAction(ActionEvent event) {
         sayCommandExecutor.execute(
-                getSayText(),
-                new SayOption(null, null, null));
+                new SayOption(getSayText(), null, null, null));
     }
 
     private String getSayText() {
