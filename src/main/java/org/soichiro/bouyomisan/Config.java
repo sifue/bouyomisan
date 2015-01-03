@@ -1,8 +1,6 @@
 package org.soichiro.bouyomisan;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,7 +59,8 @@ public class Config {
     private Config() {
         com.typesafe.config.Config conf =
                 ConfigFactory.parseFile(new File(
-                        System.getProperty("bouyomisan.conf.path", "bouyomisan.conf")));
+                        System.getProperty("bouyomisan.conf.path",
+                                getClass().getResource("bouyomisan.conf").getPath())));
         this.sayCommand = conf.getString("bouyomisan.say.command");
         this.sayVoice = conf.getString("bouyomisan.say.voice");
         this.sayVolume = conf.getString("bouyomisan.say.volume");
