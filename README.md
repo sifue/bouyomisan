@@ -1,5 +1,5 @@
 # 棒読みさんって何？
-![棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/lips-icon.png)
+![棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/lips-icon.png)  
 Windowsにある[棒読みさん](http://chi.usamimi.info/Program/Application/BouyomiChan/)の機能の一部をMac用に移植したアプリです。
 
 # 棒読みちゃんから移植した機能
@@ -13,6 +13,7 @@ Windowsにある[棒読みさん](http://chi.usamimi.info/Program/Application/Bo
 1. [Java8(JREまたはJDK)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)のインストール
 2. [SayKotoeri2](https://sites.google.com/site/nicohemus/home/saykotoeri2)のインストール
 3. [棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/bouyomisan-1.0.0.dmg)をインストール
+
 ![棒読みさんインストール](https://raw.githubusercontent.com/sifue/bouyomisan/master/doc/img/install.png)
 
 # 使い方
