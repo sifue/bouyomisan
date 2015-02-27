@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,9 +17,22 @@ import java.util.regex.Pattern;
 public class SayCommandExecutor {
 
     /**
+     * 1つづつしか読み上げさせないセマフォ
+     */
+    private final Semaphore available = new Semaphore(1, true);
+
+    /**
      * コンストラクタ
      */
     public SayCommandExecutor() {
+    }
+
+    /**
+     * 現在再生中かどうかを返す
+     * @return
+     */
+    public boolean isPlaying() {
+        return available.availablePermits() == 0;
     }
 
     /**
@@ -30,38 +44,47 @@ public class SayCommandExecutor {
      * @return 読み上げられたカナのテキスト
      */
     synchronized public String execute(SayOption option) {
-        if(option.sayText == null || option.sayText.isEmpty()) return "";
-
-        String replacedText = getReplacedText(option.sayText);
-        String readingText = getKanaReading(replacedText);
-        Config conf = Config.getSingleton();
-        if(!new File(conf.sayCommand).isFile()) {
-            throw new IllegalStateException(
-                    String.format("読み上げコマンド %s が存在しません.", conf.sayCommand));
-        }
-
-        List<String> commandList = new ArrayList<String>();
-        commandList.add(conf.sayCommand);
-        commandList.add("-p");
-        commandList.add(option.sayVoice == null
-                ? conf.sayVoice : option.sayVoice);
-        commandList.add("-s");
-        commandList.add(option.saySpeed == null
-                ? conf.saySpeed : option.saySpeed);
-        commandList.add("-b");
-        commandList.add(option.sayVolume == null
-                ? conf.sayVolume : option.sayVolume);
-        commandList.add(readingText);
-        ProcessBuilder pb = new ProcessBuilder();
-        pb.command(commandList);
-
         try {
-            pb.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            available.acquire();
+            if(option.sayText == null || option.sayText.isEmpty()) return "";
 
-        return readingText;
+            String replacedText = getReplacedText(option.sayText);
+            String readingText = getKanaReading(replacedText);
+            Config conf = Config.getSingleton();
+            if(!new File(conf.sayCommand).isFile()) {
+                throw new IllegalStateException(
+                        String.format("読み上げコマンド %s が存在しません.", conf.sayCommand));
+            }
+
+            List<String> commandList = new ArrayList<String>();
+            commandList.add(conf.sayCommand);
+            commandList.add("-p");
+            commandList.add(option.sayVoice == null
+                    ? conf.sayVoice : option.sayVoice);
+            commandList.add("-s");
+            commandList.add(option.saySpeed == null
+                    ? conf.saySpeed : option.saySpeed);
+            commandList.add("-b");
+            commandList.add(option.sayVolume == null
+                    ? conf.sayVolume : option.sayVolume);
+            commandList.add(readingText);
+            ProcessBuilder pb = new ProcessBuilder();
+            pb.command(commandList);
+
+            try {
+                Process ps = pb.start();
+                ps.waitFor(); // 読み上げ終了までは待つ
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return readingText;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            available.release();
+        }
+        return "";
     }
 
     /**

@@ -41,50 +41,58 @@ public class BouyomisanServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf byteBuf = (ByteBuf) msg;
 
         short command = Short.reverseBytes(byteBuf.getShort(0));
-        if (command != 0x001) throw new IllegalArgumentException("不正なコマンドを検知しました. command:" + command);
-        short speed = Short.reverseBytes(byteBuf.getShort(2));
-        short volume = Short.reverseBytes(byteBuf.getShort(6));
-        short voice = Short.reverseBytes(byteBuf.getShort(8));
-        byte encode = byteBuf.getByte(10);
-        int textLength = Integer.reverseBytes(byteBuf.getInt(11));
+        if (command == 0x001) { // 読み上げ
+            short speed = Short.reverseBytes(byteBuf.getShort(2));
+            short volume = Short.reverseBytes(byteBuf.getShort(6));
+            short voice = Short.reverseBytes(byteBuf.getShort(8));
+            byte encode = byteBuf.getByte(10);
+            int textLength = Integer.reverseBytes(byteBuf.getInt(11));
 
-        String charset;
-        if (encode == 0) {
-            charset = "UTF-8";
-        } else if (encode == 1) {
-            charset = "UTF-16LE";
-        } else if (encode == 2) {
-            charset = "Shift_JIS";
+            String charset;
+            if (encode == 0) {
+                charset = "UTF-8";
+            } else if (encode == 1) {
+                charset = "UTF-16LE";
+            } else if (encode == 2) {
+                charset = "Shift_JIS";
+            } else {
+                throw new IllegalArgumentException("不正な文字コードを検知しました. encode:" + encode);
+            }
+
+            byte[] textBytes = new byte[textLength];
+            byteBuf.getBytes(15, textBytes);
+            String text = new String(textBytes, Charset.forName(charset));
+
+            String stringVoice;
+            if (voice == 0 ) {
+                stringVoice = null;
+            } else if ( 1 <= voice  && voice <= 2) {
+                stringVoice = "aq_f1b";
+            } else if ( 3 <= voice  && voice <= 4) {
+                stringVoice = "aq_m3";
+            } else {
+                stringVoice = "aq_rm";
+            }
+            String stringVolume = volume < 0 ? null : Short.valueOf(volume).toString();
+            String stringSpeed = speed < 0 ? null : Short.valueOf(speed).toString();
+
+            SayOption option = new SayOption(
+                    text,
+                    stringVolume,
+                    stringVoice,
+                    stringSpeed
+            );
+
+            String readingText = sayCommandExecutor.execute(option);
+            readingTextSubject.onNext(readingText);
+        } else if ( command == 0x0120) { // 今読み上げているかどうか
+            final ByteBuf bb = ctx.alloc().buffer(1);
+            bb.writeByte(sayCommandExecutor.isPlaying() ? 1 : 0);
+            ctx.write(bb);
+            ctx.flush();
         } else {
-            throw new IllegalArgumentException("不正な文字コードを検知しました. encode:" + encode);
+            throw new IllegalArgumentException("未対応のコマンドを検知しました. command:" + command);
         }
-
-        byte[] textBytes = new byte[textLength];
-        byteBuf.getBytes(15, textBytes);
-        String text = new String(textBytes, Charset.forName(charset));
-
-        String stringVoice;
-        if (voice == 0 ) {
-            stringVoice = null;
-        } else if ( 1 <= voice  && voice <= 2) {
-            stringVoice = "aq_f1b";
-        } else if ( 3 <= voice  && voice <= 4) {
-            stringVoice = "aq_m3";
-        } else {
-            stringVoice = "aq_rm";
-        }
-        String stringVolume = volume < 0 ? null : Short.valueOf(volume).toString();
-        String stringSpeed = speed < 0 ? null : Short.valueOf(speed).toString();
-
-        SayOption option = new SayOption(
-                text,
-                stringVolume,
-                stringVoice,
-                stringSpeed
-        );
-
-        String readingText = sayCommandExecutor.execute(option);
-        readingTextSubject.onNext(readingText);
     }
 
     @Override

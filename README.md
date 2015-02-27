@@ -8,11 +8,12 @@ Windowsにあるテキスト読み上げアプリ[棒読みさん](http://chi.us
 - 漢字のかなへの読み上げの変換
 - Socket通信を利用した読み上げ
 - 棒読みちゃんとおなじAquesTalkを利用するためのUIを提供
+- 同時に複数を読み上げないような読み上げ方針
 
 # インストール方法
 1. [Java8(JREまたはJDK)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)のインストール
 2. [SayKotoeri2](https://sites.google.com/site/nicohemus/home/saykotoeri2)のインストール
-3. [棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/bouyomisan-1.0.0.dmg)をインストール
+3. [棒読みさん](https://raw.githubusercontent.com/sifue/bouyomisan/master/bouyomisan-1.0.2.dmg)をインストール
 
 ![棒読みさんインストール](https://raw.githubusercontent.com/sifue/bouyomisan/master/doc/img/install.png)
 
